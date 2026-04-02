@@ -1,0 +1,470 @@
+/* ============================
+   1) THEME TOKENS (light mode)
+   ============================ */
+:root{
+  --bg: #faf9ff;            /* page background: warm off-white */
+  --surface: #ffffff;       /* cards/nav surfaces */
+  --surface-alt: #f3f0ff;   /* subtle tinted panels */
+  --text: #19141f;          /* primary text */
+  --muted: #5a5366;         /* secondary text */
+
+  --brand-700: #5a21e6;
+  --brand-600: #6b2bf2;
+  --brand-500: #7a3ff5;
+  --brand-400: #9c73ff;
+
+  --ring: rgba(107, 43, 242, .4); /* focus ring color */
+  --radius: 16px;
+  --shadow: 0 8px 24px rgba(31, 18, 77, .12);
+  --shadow-strong: 0 16px 40px rgba(31, 18, 77, .18);
+}
+
+/* Optional dark theme values; toggled by [data-theme="dark"] on <html> */
+html[data-theme="dark"]{
+  --bg: #0f0d13;
+  --surface: #17141d;
+  --surface-alt: #1e1a26;
+  --text: #f5f6fa;
+  --muted: #c6c2d1;
+
+  --brand-700: #4d18d6;
+  --brand-600: #6b2bf2;
+  --brand-500: #7a3ff5;
+  --brand-400: #b19aff;
+
+  --ring: rgba(156, 115, 255, .35);
+  --shadow: 0 12px 28px rgba(0,0,0,.18);
+  --shadow-strong: 0 18px 48px rgba(0,0,0,.28);
+}
+
+/* ============================
+   2) BASE + RESET
+   ============================ */
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+body{
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  color: var(--text);
+  background: var(--bg);
+}
+img{ max-width: 100%; height: auto; display: block; }
+
+a{ color: var(--brand-600); text-decoration: none; }
+a:focus-visible{ outline: 3px solid var(--ring); outline-offset: 3px; border-radius: 10px; }
+
+.container{ width: min(1100px, 92%); margin-inline: auto; }
+
+/* ============================
+   3) SKIP LINK (a11y)
+   ============================ */
+.skip-link{
+  position: absolute; left: -999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus-visible{
+  position: fixed; left: 12px; top: 12px;
+  width: auto; height: auto; padding: .5rem .75rem;
+  background: var(--brand-600); color: #fff; border-radius: 10px; z-index: 1000;
+}
+
+/* ============================
+   4) HEADER + NAV
+   ============================ */
+.site-header{
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in oklab, var(--surface) 90%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+}
+.header-inner{ display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; }
+
+.brand{ display: flex; align-items: center; gap: .85rem; }
+.brand_logo{
+  width: 52px; height: 52px; border-radius: 14px; background: #fff;
+  object-fit: cover; box-shadow: var(--shadow);
+}
+.brand_title{ margin: 0; font-size: clamp(1.05rem, 1.6vw, 1.4rem); }
+.brand_tagline{ margin: 0; color: var(--muted); font-size: .95rem; }
+
+.nav_toggle{
+  display: none;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  padding: .55rem .8rem; border-radius: 10px; cursor: pointer;
+}
+.nav_toggle:focus-visible{ outline: 3px solid var(--ring); }
+.nav_list{ list-style: none; margin: 0; padding: 0; display: flex; gap: .5rem; }
+.nav_list a{
+  display: inline-block; padding: .5rem .7rem; border-radius: 10px;
+}
+.nav_list a:hover{ background: color-mix(in oklab, var(--brand-400) 12%, transparent); }
+.nav_list a.is-active{ background: color-mix(in oklab, var(--brand-400) 18%, transparent); }
+
+/* injected theme toggle button */
+.theme-toggle{
+  margin-left: .5rem; border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  background: var(--surface); color: var(--text);
+  padding: .45rem .65rem; border-radius: 10px; cursor: pointer;
+}
+.theme-toggle:hover{ filter: brightness(1.03); }
+.theme-toggle:focus-visible{ outline: 3px solid var(--ring); }
+
+/* ============================
+   5) HERO
+   ============================ */
+.hero{
+  padding: 64px 0 48px;
+  background:
+    radial-gradient(800px 400px at 10% -10%, color-mix(in oklab, var(--brand-400) 30%, transparent), transparent 60%),
+    radial-gradient(800px 400px at 90% 0%, color-mix(in oklab, var(--brand-400) 18%, transparent), transparent 60%);
+  border-bottom: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+}
+.hero__inner{ display: grid; align-items: center; min-height: 220px; }
+.hero__copy h2{ font-size: clamp(1.6rem, 3.2vw, 2.2rem); margin: 0 0 .5rem; }
+.hero__copy p{ color: var(--muted); max-width: 52ch; }
+
+/* buttons */
+.btn{
+  display: inline-block; border: none; padding: .7rem 1rem; border-radius: 12px;
+  font-weight: 700; cursor: pointer; box-shadow: var(--shadow);
+  transform: translateZ(0); transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn--primary{ background: linear-gradient(180deg, var(--brand-500), var(--brand-600)); color: #fff; }
+.btn--primary:hover{ transform: translateY(-1px); filter: brightness(1.06); box-shadow: var(--shadow-strong); }
+
+/* ============================
+   6) SECTIONS
+   ============================ */
+.section{ padding: 48px 0; }
+.section--alt{
+  background: var(--surface-alt);
+  border-top: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-bottom: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+}
+.checklist{ margin: .5rem 0 0; padding-left: 1.25rem; }
+.checklist li{ margin: .25rem 0; }
+
+/* subtle card hover for interactive feel */
+.card{
+  background: var(--surface);
+  border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-strong); }
+
+/* ============================
+   7) DONATE (center everything)
+   ============================ */
+
+.stripe-donation{
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  max-width: 650px;
+  margin: 1rem auto 0;
+  text-align: center;
+}
+
+.donation-options {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.donation-btn {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #fff;
+  color: black;
+  border-radius: 12px;
+  padding: 0.8rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.donation-btn:hover,
+.donation-btn:focus-visible {
+  transform: translateY(-2px);
+  background: var(--surface-alt);
+}
+
+.donation-btn.is-selected {
+  background: var(--brand-600);
+  color: white;
+  border-color: var(--brand-600);
+}
+
+.donation-btn:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.custom-donation {
+  margin: 1rem 0;
+  display: grid;
+  gap: 0.5rem;
+  justify-items: center;
+}
+
+.custom-donation input {
+  width: min(260px, 90%);
+  padding: 0.8rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  font: inherit;
+}
+
+.custom-donation input:focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.custom-donation input[aria-invalid="true"] {
+  border-color: #d64545;
+  box-shadow: 0 0 0 3px color-mix(in oklab, #ff8e8e 28%, transparent);
+}
+
+#custom-donate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.donation-status{
+  min-height: 3.25rem;
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in oklab, var(--muted) 18%, transparent);
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  color: var(--muted);
+}
+
+.donation-status:empty{
+  display: none;
+}
+
+.donation-status[data-state="info"]{
+  background: color-mix(in oklab, var(--brand-400) 10%, var(--surface));
+  border-color: color-mix(in oklab, var(--brand-500) 24%, transparent);
+  color: var(--text);
+}
+
+.donation-status[data-state="loading"]{
+  background: color-mix(in oklab, #ffd76a 18%, var(--surface));
+  border-color: color-mix(in oklab, #d2a100 38%, transparent);
+  color: var(--text);
+}
+
+.donation-status[data-state="success"]{
+  background: color-mix(in oklab, #7ad67a 20%, var(--surface));
+  border-color: color-mix(in oklab, #2e9b4f 35%, transparent);
+  color: var(--text);
+}
+
+.donation-status[data-state="error"]{
+  background: color-mix(in oklab, #ff8e8e 18%, var(--surface));
+  border-color: color-mix(in oklab, #d64545 35%, transparent);
+  color: var(--text);
+}
+/* thank-you box */
+#thank-you-message{
+  margin-top: 1rem; background: color-mix(in oklab, var(--brand-400) 10%, var(--surface));
+  border: 1px solid color-mix(in oklab, var(--brand-400) 30%, transparent);
+  border-radius: 12px; padding: .75rem 1rem;
+}
+
+/* ============================
+   8) CAROUSEL (3 slides, expandable)
+   ============================ */
+.carousel{
+  position: relative; background: var(--surface);
+  border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-radius: var(--radius); padding: .5rem 0; overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.carousel_track{ display: flex; gap:0; transition: transform 300ms ease; will-change: transform; }
+.slide{ margin:0; min-width: 100%; flex: 0 0 100%; padding:0; text-align: center; }
+.slide img{
+    display: block;
+    margin: 0 auto;
+    width: 100%; 
+    height: auto; 
+    aspect-ratio: 16 / 9; 
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px; box-shadow: var(--shadow);
+}
+.slide figcaption{ color: var(--muted); font-size: .92rem; margin-top: .4rem; }
+
+/* arrows */
+.carousel_btn{
+    z-index: 2;
+    position: absolute; top: 50%; transform: translateY(-50%);
+    border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+    background: color-mix(in oklab, var(--surface) 80%, transparent);
+    backdrop-filter: blur(6px);
+    color: var(--text);
+    font-size: 1.25rem; line-height: 1;
+    padding: .5rem .7rem; border-radius: 999px; cursor: pointer; box-shadow: var(--shadow);
+}
+.carousel_btn:hover, .carousel_btn:focus-visible{ filter: brightness(1.05); outline: 3px solid var(--ring); }
+.carousel_btn.prev{ left: .5rem; }
+.carousel_btn.next{ right: .5rem; }
+.carousel_btn[disabled]{ opacity: .45; cursor: not-allowed; }
+
+/* dots */
+.carousel_dots{
+  display: flex; justify-content: center; gap: 8px;
+  margin: .5rem 0 .25rem;
+}
+.carousel_dot{
+  width: 9px; height: 9px; border-radius: 999px;
+  background: color-mix(in oklab, var(--muted) 40%, transparent);
+  border: 1px solid color-mix(in oklab, var(--muted) 25%, transparent);
+  cursor: pointer;
+}
+.carousel_dot[aria-current="true"]{
+  background: var(--brand-600);
+  border-color: color-mix(in oklab, var(--brand-600) 50%, transparent);
+}
+
+/* status (a11y) */
+.carousel_status{
+  text-align: center; color: var(--muted); font-size: .85rem; margin-bottom: .35rem;
+}
+
+/* ============================
+   9) TIMELINE
+   ============================ */
+.timeline{
+  margin-top: 1rem; padding: .9rem 1rem;
+  background: var(--surface);
+  border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-radius: 14px; box-shadow: var(--shadow);
+}
+.timeline h3{ margin: 0 0 .5rem; color: var(--brand-700); }
+.timeline-list{ margin: 0; padding-left: 1.25rem; color: var(--muted); }
+.timeline-list li{ margin: .35rem 0; }
+
+/* ============================
+   10) WINNERS
+   ============================ */
+.winners-grid{
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px; margin-top: 1rem;
+}
+.winner-card{
+  background: var(--surface); border: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  border-radius: 14px; padding: 1rem; box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.winner-card:hover{ transform: translateY(-2px); box-shadow: var(--shadow-strong); }
+.winner-name{ margin: 0 0 .35rem; color: var(--brand-600); }
+.winner-meta{ margin: 0; color: var(--muted); font-size: .96rem; }
+
+/* ============================
+   11) PARTNERS (white logos safe)
+   ============================ */
+
+
+
+/* Partners — responsive, normalized logo sizing */
+#partners .partners {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  align-items: stretch;
+  margin-top: .75rem;
+}
+
+#partners figure { margin: 0; }
+
+#partners .partner {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 170px; /* consistent card height */
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+#partners .partner:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-strong);
+}
+
+#partners .logo-box {
+  width: 200px;   /* max width each logo box */
+  height: 100px;  /* fixed uniform height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto .6rem;
+  overflow: hidden; /* hides anything spilling outside */
+}
+
+#partners .partner img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;  /* fit inside the box */
+  display: block;
+}
+
+#partners .logo-box--dark{
+  background: #1a1622;                       /* dark, neutral */
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px;
+  padding: 6px;                               /* a little breathing room */
+}
+
+#partners .partner figcaption {
+  margin: 0;
+  color: #2f2a43;
+  font-weight: 600;
+  letter-spacing: .1px;
+}
+
+
+
+
+/* ============================
+   12) CONTACT + FOOTER
+   ============================ */
+.contact-list{ padding-left: 1.25rem; }
+.site-footer{
+  padding: 28px 0;
+  border-top: 1px solid color-mix(in oklab, var(--muted) 20%, transparent);
+  background: var(--surface);
+}
+
+/* ============================
+   13) MOBILE NAV
+   ============================ */
+@media (max-width: 800px){
+  .nav_toggle{ display: inline-block; }
+  .nav_list{
+    display: none; flex-direction: column; background: var(--surface);
+    padding: .5rem; border-radius: 12px; box-shadow: var(--shadow);
+  }
+  .nav_list[data-open="true"]{ display: flex; }
+}
+
+/* user preference: reduce motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; animation: none !important; }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "equity-in-healing-scholarship",
+  "version": "1.0.0",
+  "description": "Scholarship website with a beginner-friendly Node backend for Stripe donations.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
