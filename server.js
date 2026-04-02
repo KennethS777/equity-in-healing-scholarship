@@ -40,8 +40,10 @@ const server = http.createServer(async (request, response) => {
 
     // For other GET requests, try to serve CSS, JS, images, and other files.
     if (request.method === 'GET') {
+      // Browsers encode spaces and special characters in URLs, so decode them first.
+      const decodedPathname = decodeURIComponent(requestUrl.pathname);
       const publicPath = path.normalize(
-        path.join(projectRoot, requestUrl.pathname),
+        path.join(projectRoot, decodedPathname),
       );
 
       // Block requests that try to escape the project folder.
